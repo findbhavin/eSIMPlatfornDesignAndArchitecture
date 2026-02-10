@@ -1,0 +1,32 @@
+* Half-Wave Rectifier Circuit
+* Converts AC to pulsating DC
+
+.title Half-Wave Rectifier
+
+* AC input source (10V peak, 50Hz)
+Vin in 0 SIN(0 10V 50Hz)
+
+* Diode (using default diode model)
+D1 in out diode
+
+* Load resistor
+RL out 0 1k
+
+* Filtering capacitor
+C1 out 0 100uF
+
+* Diode model
+.model diode D(Is=1e-14 Rs=10 N=1.8)
+
+* Analysis
+.tran 0.1m 60m
+.op
+
+* Control
+.control
+run
+plot v(in) v(out)
+print v(out)
+.endc
+
+.end

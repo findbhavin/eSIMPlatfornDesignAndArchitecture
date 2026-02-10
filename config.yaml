@@ -1,0 +1,19 @@
+# eSim Platform Configuration
+
+# eSim Installation Settings
+esim:
+  installation_path: /usr/share/esim
+  ngspice_path: /usr/bin/ngspice
+  timeout: 30  # Simulation timeout in seconds
+
+# Simulation Settings
+simulation:
+  output_dir: ./simulation_results
+  keep_intermediate_files: false
+  verbosity: normal  # Options: quiet, normal, verbose
+
+# Circuit Settings
+circuit:
+  default_ground: '0'
+  default_temp: 27  # Temperature in Celsius
+  default_precision: 1e-6

@@ -1,0 +1,54 @@
+* Operational Amplifier - Non-Inverting Configuration
+* Design for eSim Internship Spring 2026
+* Gain = 1 + (R2/R1) = 11
+
+.title Non-Inverting Op-Amp Circuit
+
+* Input voltage source (1V AC for frequency analysis)
+Vin in 0 AC 1V
+
+* Op-Amp Power Supply
+VCC vcc 0 DC 15V
+VEE vee 0 DC -15V
+
+* Op-Amp (using ideal op-amp model or LM741)
+* For ideal model: X1 in+ in- vcc vee out opamp
+* Simplified resistor feedback model for demonstration
+X1 0 inv vcc vee out opamp
+
+* Feedback resistors
+R1 inv 0 1k
+R2 inv out 10k
+
+* Input resistor
+Rin in inv 1k
+
+* Load resistor
+RL out 0 10k
+
+* Op-Amp subcircuit (simplified ideal model)
+.subckt opamp inp inn vp vn out
+* Simplified op-amp model
+Rin inp inn 1Meg
+Egain out 0 inp inn 100000
+Rout out 0 100
+.ends
+
+* Analysis commands
+.ac dec 10 1 1Meg
+.tran 0.1m 10m
+.op
+
+* Control commands for plotting
+.control
+run
+* Display operating point
+print all
+* Plot frequency response
+plot db(v(out))
+plot ph(v(out))
+* Plot time domain response
+plot v(in) v(out)
+.endc
+
+.end

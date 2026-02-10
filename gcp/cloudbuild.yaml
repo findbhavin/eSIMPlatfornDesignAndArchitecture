@@ -89,7 +89,7 @@ steps:
       - '--port'
       - '80'
       - '--set-env-vars'
-      - 'REACT_APP_API_URL=https://esim-backend-XXXXXXXXX.run.app/api'
+      - 'REACT_APP_API_URL=$(gcloud run services describe esim-backend --region=us-central1 --format="value(status.url)")/api'
     id: 'deploy-frontend'
     waitFor: ['push-frontend', 'deploy-backend']
 

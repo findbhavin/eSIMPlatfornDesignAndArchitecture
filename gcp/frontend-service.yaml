@@ -4,6 +4,8 @@ metadata:
   name: esim-frontend
   labels:
     cloud.googleapis.com/location: us-central1
+  annotations:
+    description: "Frontend service for eSim Platform. Update REACT_APP_API_URL with actual backend URL after deployment."
 spec:
   template:
     metadata:

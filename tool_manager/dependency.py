@@ -242,16 +242,17 @@ class DependencyChecker:
         self.check_python_version((3, 7))
         
         # Check required Python packages
+        # Map from pip package name to import name
         required_packages = {
-            'requests': '2.28.0',
-            'click': '8.1.0',
-            'colorama': '0.4.6',
-            'pyyaml': '6.0',
-            'packaging': '21.0'
+            'requests': ('requests', '2.28.0'),
+            'click': ('click', '8.1.0'),
+            'colorama': ('colorama', '0.4.6'),
+            'yaml': ('yaml', '6.0'),  # pyyaml installs as 'yaml'
+            'packaging': ('packaging', '21.0')
         }
         
-        for package, min_ver in required_packages.items():
-            self.check_python_package(package, min_ver)
+        for import_name, (_, min_ver) in required_packages.items():
+            self.check_python_package(import_name, min_ver)
     
     def _check_ngspice_dependencies(self):
         """Check dependencies for ngspice."""

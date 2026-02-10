@@ -11,9 +11,9 @@ from dataclasses import dataclass
 import yaml
 import os
 
-from modules.planner import ResearchPlanner, ResearchPlan
-from modules.retriever import ResearchRetriever, RetrievalResult
-from modules.reasoner import ResearchReasoner, SynthesisResult
+from src.modules.planner import ResearchPlanner, ResearchPlan
+from src.modules.retriever import ResearchRetriever, RetrievalResult
+from src.modules.reasoner import ResearchReasoner, SynthesisResult
 
 
 @dataclass
@@ -315,7 +315,7 @@ class ResearchOrchestrator:
             Research result with gold planning, real retrieval
         """
         # Use gold plan
-        from modules.planner import ResearchPlan
+        from src.modules.planner import ResearchPlan
         plan = ResearchPlan(ordered_subtasks=gold_plan)
         
         # Real retrieval
@@ -366,7 +366,7 @@ class ResearchOrchestrator:
             Research result with gold planning/retrieval, real reasoning
         """
         # Use gold plan
-        from modules.planner import ResearchPlan
+        from src.modules.planner import ResearchPlan
         plan = ResearchPlan(ordered_subtasks=gold_plan)
         
         # Use gold evidence

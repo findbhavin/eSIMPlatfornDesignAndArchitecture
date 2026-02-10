@@ -1,0 +1,15 @@
+# Backend API dependencies
+flask>=2.3.0
+flask-cors>=4.0.0
+gunicorn>=21.2.0
+python-dotenv>=1.0.0
+
+# Circuit analysis and simulation
+numpy>=1.21.0
+matplotlib>=3.4.0
+scipy>=1.7.0
+PySpice>=1.5
+pyyaml>=5.4.0
+
+# File handling
+werkzeug>=2.3.0

@@ -6,26 +6,54 @@
 
 ## Overview
 
-This project is part of the **eSim Semester Long Internship Spring 2026** assignment, providing a comprehensive integration platform for eSim (Electronic Simulation Tool). It includes software components for circuit analysis, simulation wrappers, configuration management, and example circuit designs.
+This project is part of the **eSim Semester Long Internship Spring 2026** assignment, providing a comprehensive integration platform for eSim (Electronic Simulation Tool). It includes a modern web interface, REST API, backend Python modules for circuit analysis, simulation wrappers, configuration management, and example circuit designs.
 
-eSim is an open-source EDA tool for circuit design, simulation, and PCB design. This project extends eSim's capabilities with Python-based tools for automation and analysis.
+eSim is an open-source EDA tool for circuit design, simulation, and PCB design. This project extends eSim's capabilities with a full-stack web application for automation and analysis.
 
 ## Features
 
+### Backend
 - **Circuit Analysis**: Parse and analyze SPICE netlists
 - **eSim Integration**: Wrapper for eSim/ngspice simulation execution
 - **Configuration Management**: Flexible configuration system with YAML and environment variable support
+- **REST API**: Flask-based API for frontend integration
 - **Example Circuits**: Collection of standard circuit designs (Op-Amp, filters, rectifiers)
-- **Comprehensive Testing**: Full test suite with pytest
-- **Well-Documented**: Extensive documentation and inline code comments
+
+### Frontend
+- **Modern Web UI**: React-based responsive interface
+- **Circuit Library**: Browse and view available circuits
+- **Circuit Analyzer**: Upload and analyze custom SPICE netlists
+- **Simulation Runner**: Execute simulations and view results
+- **Tool Manager**: Monitor simulation tools status
+- **Configuration Panel**: Manage platform settings
+
+### Deployment
+- **Docker Support**: Containerized deployment with docker-compose
+- **GCP Ready**: Cloud Run deployment configurations
+- **Production Ready**: Optimized builds with nginx and gunicorn
 
 ## Project Structure
 
 ```
 eSIMPlatfornDesignAndArchitecture/
+├── frontend/                    # React frontend application
+│   ├── src/
+│   │   ├── components/          # React components
+│   │   ├── services/            # API service layer
+│   │   ├── App.jsx              # Main app component
+│   │   └── index.js             # Entry point
+│   ├── Dockerfile               # Frontend container
+│   ├── nginx.conf               # Nginx configuration
+│   └── package.json             # Node dependencies
+├── backend/                     # Flask REST API
+│   ├── api/
+│   │   ├── routes/              # API routes
+│   │   ├── main.py              # Flask application
+│   │   └── utils.py             # Utilities
+│   ├── Dockerfile               # Backend container
+│   └── requirements-api.txt     # API dependencies
 ├── src/
-│   └── esim_platform/          # Core Python modules
-│       ├── __init__.py
+│   └── esim_platform/           # Core Python modules
 │       ├── circuit_analyzer.py  # Circuit analysis tools
 │       ├── esim_wrapper.py      # eSim simulation wrapper
 │       └── config_manager.py    # Configuration management
@@ -34,56 +62,114 @@ eSIMPlatfornDesignAndArchitecture/
 │   ├── rc_filter.cir
 │   ├── voltage_divider.cir
 │   └── rectifier.cir
+├── gcp/                         # GCP deployment configs
+│   ├── cloudbuild.yaml          # Cloud Build configuration
+│   ├── backend-service.yaml     # Backend Cloud Run service
+│   └── frontend-service.yaml    # Frontend Cloud Run service
 ├── tests/                       # Unit tests
-│   ├── test_circuit_analyzer.py
-│   ├── test_esim_wrapper.py
-│   └── test_config_manager.py
 ├── docs/                        # Documentation
-│   ├── ARCHITECTURE.md
-│   ├── CIRCUIT_DESIGN.md
-│   ├── DEVELOPMENT.md
-│   └── USER_GUIDE.md
-├── examples/                    # Example usage scripts
-│   └── sample_circuits/
+├── docker-compose.yml           # Docker Compose configuration
+├── DEPLOYMENT.md                # Deployment guide
 ├── requirements.txt             # Python dependencies
-├── .gitignore
 └── README.md                    # This file
 ```
 
 ## Prerequisites
 
-- **Python**: 3.7 or higher
+### For Backend Development
+- **Python**: 3.9 or higher
 - **eSim**: Installed from [esim.fossee.in](https://esim.fossee.in/downloads)
 - **ngspice**: Circuit simulator (usually included with eSim)
 - **Git**: For version control
 
-### Optional
-- **PySpice**: For advanced circuit simulation features
-- **matplotlib**: For plotting simulation results
+### For Frontend Development
+- **Node.js**: 18+ and npm
+- **Modern web browser**: Chrome, Firefox, Safari, or Edge
+
+### For Docker Deployment
+- **Docker**: Version 20.10 or higher
+- **Docker Compose**: Version 2.0 or higher
+
+### For GCP Deployment
+- **gcloud CLI**: Latest version
+- **GCP Account**: With billing enabled
 
 ## Installation
 
-### 1. Clone the Repository
+### Quick Start with Docker (Recommended)
+
+```bash
+# Clone the repository
+git clone https://github.com/findbhavin/eSIMPlatfornDesignAndArchitecture.git
+cd eSIMPlatfornDesignAndArchitecture
+
+# Start with Docker Compose
+docker-compose up --build
+
+# Access the application
+# Frontend: http://localhost:3000
+# Backend API: http://localhost:8000
+```
+
+### Manual Installation
+
+#### 1. Clone the Repository
 
 ```bash
 git clone https://github.com/findbhavin/eSIMPlatfornDesignAndArchitecture.git
 cd eSIMPlatfornDesignAndArchitecture
 ```
 
-### 2. Set Up Virtual Environment (Recommended)
+#### 2. Backend Setup
 
+**Set up Python virtual environment:**
 ```bash
 python3 -m venv venv
 source venv/bin/activate  # On Windows: venv\Scripts\activate
 ```
 
-### 3. Install Dependencies
-
+**Install backend dependencies:**
 ```bash
 pip install -r requirements.txt
+pip install -r backend/requirements-api.txt
 ```
 
-### 4. Install eSim
+**Configure backend:**
+```bash
+cd backend
+cp .env.example .env
+# Edit .env with your configuration
+```
+
+**Start backend API:**
+```bash
+cd backend
+python api/main.py
+# Backend will run on http://localhost:8000
+```
+
+#### 3. Frontend Setup
+
+**Install Node.js dependencies:**
+```bash
+cd frontend
+npm install
+```
+
+**Configure frontend:**
+```bash
+cp .env.example .env
+# Edit .env with backend API URL
+# REACT_APP_API_URL=http://localhost:8000/api
+```
+
+**Start frontend development server:**
+```bash
+npm start
+# Frontend will run on http://localhost:3000
+```
+
+### 4. Install eSim (Required for Simulations)
 
 Download and install eSim from the official website:
 - **Website**: https://esim.fossee.in/downloads
@@ -93,18 +179,68 @@ Follow the installation instructions for your operating system.
 
 ### 5. Verify Installation
 
+**Check backend API:**
 ```bash
-# Check if ngspice is available
-which ngspice
+curl http://localhost:8000/api/health
+```
 
-# Run tests
+**Check if ngspice is available:**
+```bash
+which ngspice
+```
+
+**Run Python tests:**
+```bash
 pytest tests/
 ```
 
 ## Quick Start
 
-### Using the Circuit Analyzer
+### Using the Web Interface
 
+1. **Start the application:**
+   ```bash
+   docker-compose up
+   ```
+
+2. **Access the web interface:**
+   - Open browser to http://localhost:3000
+   - Navigate through Dashboard, Circuit Library, Analyzer, etc.
+
+3. **Try the features:**
+   - Browse circuits in the Circuit Library
+   - Upload and analyze a netlist in Circuit Analyzer
+   - Run simulations in Simulation Runner
+   - Check tool status in Tool Manager
+   - Adjust settings in Configuration Panel
+
+### Using the REST API
+
+**List available circuits:**
+```bash
+curl http://localhost:8000/api/circuits
+```
+
+**Get circuit details:**
+```bash
+curl http://localhost:8000/api/circuits/voltage_divider
+```
+
+**Run simulation:**
+```bash
+curl -X POST http://localhost:8000/api/simulate \
+  -H "Content-Type: application/json" \
+  -d '{"circuit_id": "voltage_divider"}'
+```
+
+**Check API health:**
+```bash
+curl http://localhost:8000/api/health
+```
+
+### Using Python Modules Directly
+
+**Circuit Analyzer:**
 ```python
 from src.esim_platform import CircuitAnalyzer
 
@@ -113,17 +249,14 @@ analyzer = CircuitAnalyzer()
 
 # Load and parse a netlist
 analyzer.load_netlist('circuits/voltage_divider.cir')
-analyzer.parse_netlist()
+analysis = analyzer.parse_netlist()
 
-# Analyze the circuit
-analysis = analyzer.analyze_circuit()
 print(f"Circuit: {analysis['circuit_name']}")
-print(f"Components: {analysis['total_components']}")
-print(f"Nodes: {analysis['total_nodes']}")
+print(f"Components: {analysis['component_count']}")
+print(f"Nodes: {analysis['node_count']}")
 ```
 
-### Using the eSim Wrapper
-
+**eSim Wrapper:**
 ```python
 from src.esim_platform import ESimWrapper
 
@@ -139,8 +272,7 @@ if wrapper.is_esim_available():
         print(output)
 ```
 
-### Using Configuration Manager
-
+**Configuration Manager:**
 ```python
 from src.esim_platform import ConfigManager
 
@@ -209,10 +341,97 @@ pytest tests/test_circuit_analyzer.py
 pytest -v
 ```
 
+## Deployment
+
+### Docker Deployment
+
+**Build and run with Docker Compose:**
+```bash
+# Build and start services
+docker-compose up --build
+
+# Run in detached mode
+docker-compose up -d
+
+# View logs
+docker-compose logs -f
+
+# Stop services
+docker-compose down
+```
+
+**Build individual images:**
+```bash
+# Backend
+docker build -t esim-backend -f backend/Dockerfile .
+
+# Frontend
+docker build -t esim-frontend -f frontend/Dockerfile ./frontend
+```
+
+### GCP Cloud Run Deployment
+
+For detailed deployment instructions, see **[DEPLOYMENT.md](DEPLOYMENT.md)**.
+
+**Quick deployment:**
+```bash
+# Set your project ID
+export PROJECT_ID=your-gcp-project-id
+
+# Deploy using Cloud Build
+gcloud builds submit --config=gcp/cloudbuild.yaml .
+
+# Or deploy manually
+# 1. Build and push images to Container Registry
+# 2. Deploy to Cloud Run
+# See DEPLOYMENT.md for complete instructions
+```
+
+**Key deployment features:**
+- Auto-scaling based on traffic
+- HTTPS by default
+- Global CDN
+- Built-in monitoring and logging
+- Cost-effective pay-per-use pricing
+
+## API Documentation
+
+### Backend API Endpoints
+
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| GET | `/api/health` | Health check |
+| GET | `/api/circuits` | List all circuits |
+| GET | `/api/circuits/:id` | Get circuit details |
+| POST | `/api/analyze` | Analyze circuit netlist |
+| POST | `/api/simulate` | Run circuit simulation |
+| GET | `/api/simulation/:id/status` | Get simulation status |
+| GET | `/api/config` | Get configuration |
+| PUT | `/api/config` | Update configuration |
+| GET | `/api/tools` | List tools status |
+| POST | `/api/tools/install` | Install tool (placeholder) |
+
+**Example API requests:**
+
+```bash
+# Get all circuits
+curl http://localhost:8000/api/circuits
+
+# Analyze a circuit file
+curl -X POST http://localhost:8000/api/analyze \
+  -F "file=@circuits/voltage_divider.cir"
+
+# Run simulation
+curl -X POST http://localhost:8000/api/simulate \
+  -H "Content-Type: application/json" \
+  -d '{"circuit_id": "voltage_divider"}'
+```
+
 ## Documentation
 
-Comprehensive documentation is available in the `docs/` directory:
+Comprehensive documentation is available:
 
+- **[DEPLOYMENT.md](DEPLOYMENT.md)**: Complete deployment guide for Docker and GCP
 - **[ARCHITECTURE.md](docs/ARCHITECTURE.md)**: System architecture and design decisions
 - **[CIRCUIT_DESIGN.md](docs/CIRCUIT_DESIGN.md)**: Detailed circuit design documentation
 - **[DEVELOPMENT.md](docs/DEVELOPMENT.md)**: Development guide and best practices

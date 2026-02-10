@@ -1,0 +1,26 @@
+* Voltage Divider Circuit
+* Basic resistive voltage divider
+* Vout = Vin * (R2/(R1+R2))
+
+.title Voltage Divider
+
+* Input voltage source
+Vin in 0 DC 10V
+
+* Divider resistors
+R1 in out 1k
+R2 out 0 2k
+
+* Analysis
+.op
+.dc Vin 0 15 0.5
+
+* Control
+.control
+run
+print v(out)
+print v(out)/v(in)
+plot v(out)
+.endc
+
+.end

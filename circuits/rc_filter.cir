@@ -1,0 +1,32 @@
+* RC Low Pass Filter Circuit
+* First-order passive filter design
+* Cutoff frequency fc = 1/(2*pi*R*C) = 159 Hz
+
+.title RC Low Pass Filter
+
+* Input signal - AC analysis
+Vin in 0 AC 1V
+
+* Filter components
+R1 in out 1k
+C1 out 0 1uF
+
+* Load resistor (optional)
+RL out 0 100k
+
+* Analysis
+.ac dec 20 1 10k
+.op
+
+* Control for plotting
+.control
+run
+print all
+* Frequency response
+plot db(v(out)/v(in))
+plot ph(v(out)/v(in))
+* Show -3dB point (cutoff frequency)
+print frequency when db(v(out)/v(in))=-3
+.endc
+
+.end
